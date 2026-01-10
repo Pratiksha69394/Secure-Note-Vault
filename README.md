@@ -2,6 +2,8 @@
 
 Secure Notes Vault is a small full-stack app (MERN-style) that allows users to store encrypted notes, share them with other users (READ/WRITE permissions), and track actions via an audit timeline.
 
+## Live Project Link: https://secure-note-vault-frontend.onrender.com
+
 ## Project structure
 
 - `backend/` - Express API
@@ -137,4 +139,5 @@ Copyright (c) 2026 Pratiksha Ankushrao
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 ...
+
 
