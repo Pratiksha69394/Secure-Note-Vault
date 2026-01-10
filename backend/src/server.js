@@ -8,15 +8,37 @@ import noteRoutes from "./routes/note.routes.js";
 import auditRoutes from "./routes/audit.routes.js";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import fs from 'fs';
+import morgan from 'morgan';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+
 
 const app = express();
 
+
+app.use(cors({
+  origin: "https://secure-note-vault-frontend.onrender.com/",
+  credentials: true
+}));
+
+app.use(express.json());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// load .env from backend folder explicitly
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
+// connect to database after env is loaded
 connectDB();
 
-app.use(cors());
-app.use(express.json());
+const logsDir = path.join(__dirname, '..', 'logs');
+fs.mkdirSync(logsDir, { recursive: true });
+const accessLogPath = path.join(logsDir, 'server.log');
+const accessLogStream = fs.createWriteStream(accessLogPath, { flags: 'a' });
+app.use(morgan('combined', { stream: accessLogStream }));
 
 app.get("/", (req,res)=>res.send("Secure Notes Vault API running"));
 
