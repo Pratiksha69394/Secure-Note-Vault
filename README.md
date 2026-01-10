@@ -45,6 +45,69 @@ npm run dev
 - `MONGO_URI` - MongoDB connection string
 - `JWT_SECRET` - secret used for signing JWT tokens
 
+## Backend - Setup & API docs
+
+Overview
+
+The backend provides authentication (register/login) and CRUD for encrypted notes with sharing and audit logging.
+
+Quick start (backend)
+
+1. Install dependencies
+
+```bash
+cd backend
+npm install
+npm install swagger-jsdoc swagger-ui-express
+```
+
+2. Create a `.env` in `backend/` with:
+
+```
+MONGO_URI=mongodb://localhost:27017/secure-notes
+JWT_SECRET=your_jwt_secret
+ENCRYPTION_KEY=change_this_to_a_strong_secret
+PORT=5000
+```
+
+3. Run the server
+
+```bash
+npm run dev
+# or
+npm start
+```
+
+4. API docs (Swagger UI): http://localhost:5000/api-docs
+
+Postman collection
+
+See `backend/postman_collection.json` for a basic collection you can import to test endpoints.
+
+Hosting on GitHub
+
+1. Create a new GitHub repo.
+2. From the `backend` folder:
+
+```bash
+git init
+git add .
+git commit -m "Initial backend"
+git branch -M main
+git remote add origin https://github.com/<your-username>/<repo>.git
+git push -u origin main
+```
+
+Notes
+
+- The app stores notes AES-encrypted using `ENCRYPTION_KEY`.
+- Audit logs are kept in `AuditLog` collection.
+
+Next steps you may want
+
+- Add rate-limiting and input validation
+- Add CI workflow and Dockerfile for deployment
+
 ## API (important endpoints)
 - `POST /api/auth/register` - register a new user
 - `POST /api/auth/login` - login (returns token)

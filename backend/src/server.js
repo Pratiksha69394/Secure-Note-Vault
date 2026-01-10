@@ -6,6 +6,8 @@ import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import noteRoutes from "./routes/note.routes.js";
 import auditRoutes from "./routes/audit.routes.js";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 
@@ -18,9 +20,29 @@ app.use(express.json());
 
 app.get("/", (req,res)=>res.send("Secure Notes Vault API running"));
 
+/* Swagger setup */
+const swaggerOptions = {
+	definition: {
+		openapi: "3.0.0",
+		info: {
+			title: "Secure Notes Vault API",
+			version: "1.0.0",
+			description: "API for user auth and encrypted notes with sharing"
+		},
+		servers: [
+			{ url: `http://localhost:${process.env.PORT || 5000}/api` }
+		]
+	},
+	apis: ["./src/routes/*.js", "./src/controllers/*.js"]
+};
+
+const specs = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/notes", noteRoutes);
 app.use("/api/audit", auditRoutes);
 
-app.listen(5000, ()=>console.log("Server running on 5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, ()=>console.log(`Server running on ${PORT}`));
 
