@@ -8,6 +8,8 @@ import noteRoutes from "./routes/note.routes.js";
 import auditRoutes from "./routes/audit.routes.js";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import fs from "fs";
+import morgan from "morgan";
 
 dotenv.config();
 
@@ -17,6 +19,13 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
+
+// ensure logs directory exists and setup request logging
+const logsDir = new URL("../logs", import.meta.url).pathname;
+fs.mkdirSync(logsDir, { recursive: true });
+const logFile = new URL("../logs/server.log", import.meta.url).pathname;
+const accessLogStream = fs.createWriteStream(logFile, { flags: "a" });
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.get("/", (req,res)=>res.send("Secure Notes Vault API running"));
 
