@@ -20,10 +20,10 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// ensure logs directory exists and setup request logging
-const logsDir = new URL("../logs", import.meta.url).pathname;
-fs.mkdirSync(logsDir, { recursive: true });
-const logFile = new URL("../logs/server.log", import.meta.url).pathname;
+// ensure exports directory exists and setup request logging (exports is tracked)
+const exportsDir = new URL("../exports", import.meta.url).pathname;
+fs.mkdirSync(exportsDir, { recursive: true });
+const logFile = new URL("../exports/server.log", import.meta.url).pathname;
 const accessLogStream = fs.createWriteStream(logFile, { flags: "a" });
 app.use(morgan("combined", { stream: accessLogStream }));
 
