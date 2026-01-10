@@ -15,7 +15,10 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors(
+  origin: "https://secure-note-vault-frontend.onrender.com/",
+  credentials: true
+));
 app.use(express.json());
 
 app.get("/", (req,res)=>res.send("Secure Notes Vault API running"));
@@ -45,4 +48,5 @@ app.use("/api/audit", auditRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>console.log(`Server running on ${PORT}`));
+
 
