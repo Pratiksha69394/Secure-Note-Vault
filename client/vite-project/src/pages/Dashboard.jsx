@@ -41,7 +41,7 @@ export default function Dashboard() {
   const loadSharedNotes = async () => {
     try {
       console.log("Loading shared notes...");
-      const res = await api.get("/notes/shared");
+      const res = await api.get("/api/notes/shared");
       console.log("Shared notes loaded:", res.data);
       setSharedNotes(res.data);
     } catch (err) {
@@ -53,7 +53,7 @@ export default function Dashboard() {
   // Load audit timeline
   const loadTimeline = async () => {
     try {
-      const res = await api.get("/audit");
+      const res = await api.get("/api/audit");
       setTimeline(res.data);
     } catch (err) {
       console.error("Error loading timeline:", err);
@@ -83,10 +83,10 @@ export default function Dashboard() {
 
       if (selectedNote?._id) {
         // Update
-        await api.put(`/notes/${selectedNote._id}`, { title, content });
+        await api.put(`/api/notes/${selectedNote._id}`, { title, content });
       } else {
         // Create
-        await api.post("/notes", { title, content });
+        await api.post("/api/notes", { title, content });
       }
 
       resetForm();
@@ -104,7 +104,7 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this note?")) {
       try {
-        await api.delete(`/notes/${id}`);
+        await api.delete(`/api/notes/${id}`);
         setNotes(notes.filter((n) => n._id !== id));
         if (selectedNote?._id === id) resetForm();
         loadTimeline();
@@ -145,7 +145,7 @@ export default function Dashboard() {
 
     try {
       console.log("Sharing note:", selectedNote._id, { usernameOrEmail: shareEmail, permission: sharePermission });
-      const response = await api.post(`/notes/${selectedNote._id}/share`, { 
+      const response = await api.post(`/api/notes/${selectedNote._id}/share`, { 
         usernameOrEmail: shareEmail,
         permission: sharePermission
       });
@@ -164,7 +164,7 @@ export default function Dashboard() {
   // Logout Handler
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/api/auth/login");
   };
 
   // Filter notes
