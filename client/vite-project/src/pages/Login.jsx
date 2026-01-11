@@ -16,7 +16,7 @@ export default function Login() {
     try {
       const res = await api.post("/api/auth/login", { email, password });
       login(res.data.token);
-      navigate("/api/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials");
       console.log(err);
