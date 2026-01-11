@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import  {logAudit}  from "../utils/auditLogger.js";
+import { info, error } from "../utils/logger.js";
 
 
 export const register = async (req,res)=>{
@@ -11,8 +12,14 @@ export const register = async (req,res)=>{
   if(await User.findOne({email})) return res.status(400).json({msg:"User exists"});
 
   const hash = await bcrypt.hash(password,10);
-  await User.create({name,email,password:hash});
-  res.json({msg:"Registered"});
+  try{
+    await User.create({name,email,password:hash});
+    info(`REGISTER success: ${email}`);
+    res.json({msg:"Registered"});
+  } catch (err){
+    error(`REGISTER error: ${err.message}`);
+    res.status(500).json({msg:"Server error"});
+  }
 };
 
 // export const login = async (req,res)=>{
@@ -44,6 +51,7 @@ export const login = async (req, res) => {
   );
 
   await logAudit(req, "LOGIN", user._id); // <-- FIXED
+  info(`LOGIN success: ${user.email}`);
 
   res.json({ token });
 };
