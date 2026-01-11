@@ -27,7 +27,7 @@ export default function Dashboard() {
   const loadMyNotes = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/notes/my");
+      const res = await api.get("/api/notes/my");
       setNotes(res.data);
     } catch (err) {
       setError("Failed to load notes");

@@ -7,7 +7,7 @@ export default function AuditTimeline() {
   useEffect(() => {
     const fetchTimeline = async () => {
       try {
-        const res = await api.get("/audit");
+        const res = await api.get("/api/audit");
         setTimeline(res.data);
       } catch (err) {
         console.error(err);

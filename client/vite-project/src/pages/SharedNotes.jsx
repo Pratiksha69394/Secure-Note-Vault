@@ -7,7 +7,7 @@ const SharedNotes = () => {
   const [notes, setNotes] = useState([]);
 
   const fetchShared = async () => {
-    const res = await api.get("/notes/shared");
+    const res = await api.get("/api/notes/shared");
     setNotes(res.data);
   };
 

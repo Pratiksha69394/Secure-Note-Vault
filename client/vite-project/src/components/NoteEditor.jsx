@@ -20,9 +20,9 @@ export default function NoteEditor({ note, onSaved }) {
     if (!title || !content) return alert("Fill all fields");
     
     if (note?._id) {
-      await api.put(`/notes/${note._id}`, { title, content });
+      await api.put(`/api/notes/${note._id}`, { title, content });
     } else {
-      await api.post("/notes", { title, content });
+      await api.post("/api/notes", { title, content });
     }
     
     setTitle("");

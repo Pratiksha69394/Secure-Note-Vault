@@ -11,8 +11,8 @@ export default function Register() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/auth/register", form);
-      nav("/");
+      await api.post("/api/auth/register", form);
+      nav("/api/auth/login");
     } catch (err) {
       setError("Registration failed");
       console.error("Registration error:", err);

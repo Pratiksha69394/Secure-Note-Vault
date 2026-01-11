@@ -6,7 +6,7 @@ const ShareModal = ({ noteId, close }) => {
 const [permission, setPermission] = useState("READ");
 
   const handleShare = async () => {
-    await api.post(`/notes/${noteId}/share`, {
+    await api.post(`/api/notes/${noteId}/share`, {
   usernameOrEmail,
   permission
 });

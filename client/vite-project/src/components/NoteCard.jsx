@@ -4,7 +4,7 @@ import api from "../api/api";
 export default function NoteCard({ note, onSelect, refresh, refreshNotes }) {
   const handleDelete = async () => {
     if (window.confirm("Delete this note?")) {
-      await api.delete(`/notes/${note._id}`);
+      await api.delete(`/api/notes/${note._id}`);
       refresh ? refresh() : refreshNotes();
     }
   };

@@ -9,7 +9,7 @@ export default function Layout({ children }) {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/api/auth/login');
   };
 
   return (
